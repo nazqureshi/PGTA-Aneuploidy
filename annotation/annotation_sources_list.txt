@@ -1,0 +1,70 @@
+Annotation Sources Master List - N.Q.
+
+1. DBSNP
+    1. most current/recent dataset from dbsnp 
+    2. /dbsnp/GCF_000001405.40.gz
+2. ANNOVAR
+    1. annovar script: 
+        - script code dropdown
+            
+            ```r
+            #!/usr/bin/bash
+            
+            # This script is used to generate an annovar annotation file from a vcf file
+            
+            # hardcode parameters and files directly 
+            # Added avsnp151 protocol to get rsid assignments to compare with manually done dbsnp assignment afterwards
+            
+            # Usage: ./annotate_ANNOVAR_script.sh 
+            
+            # Set variables based on user inputs
+            # Lab-server path roots -- update these to match your own environment.
+            PROJECT_ROOT="/path/to/lab_server/aneuploidyProj"
+            TOOLS_ROOT="/path/to/lab_server/tools/ANNOVAR/annovar_202006"
+
+            INPUT_VCF="${PROJECT_ROOT}/third_annotatoin_YES_total_embryos/files_to_run_annovar/filtered_nogenotypes.vcf"
+            OUTPUT_PREFIX="${PROJECT_ROOT}/third_annotatoin_YES_total_embryos/files_to_run_annovar/annovar_annotated_sig_vars_less_min_5"
+            THREADS=12
+            
+            # Paths to ANNOVAR tools and databases
+            ANNOVAR_TOOL="${TOOLS_ROOT}/table_annovar.pl"
+            HUMAN_DB="${TOOLS_ROOT}/humandb"
+            BUILDVER="hg38"
+            PROTOCOL="refGene,ensGene,knownGene,gnomad211_exome,gnomad312_genome,gnomad41_exome,gnomad41_genome,clinvar_20221231,dbnsfp42a,avsnp151"
+            OPERATION="g,g,g,f,f,f,f,f,f,f"
+            
+            perl $ANNOVAR_TOOL \
+                $INPUT_VCF \
+                $HUMAN_DB \
+                -buildver $BUILDVER \
+                -otherinfo \
+                -protocol $PROTOCOL \
+                -operation $OPERATION \
+                -nastring "." \
+                -vcfinput \
+                --thread $THREADS \
+                --polish \
+                --outfile $OUTPUT_PREFIX \
+                2> $OUTPUT_PREFIX.filtered.log
+            ```
+            
+3. SNP Gene Sets
+    1. snp2Gene()
+    2. gene2Set
+4. Verifications with locuszoom
+5. GWAS Catalog
+    1. /path/to/lab_server/aneuploidyProj/annotation/GWAS_v1.0.2_7.31.2025.tsv
+        1. The most up to date dataset file from official gwas catalog
+6. GTEX eQTL
+7. GTEX sQTL
+8. Mouse IMPC - phenotype + viability datasets
+    1. https://www.mousephenotype.org/data/release
+    2. https://ftp.ebi.ac.uk/pub/databases/impc/all-data-releases/latest/results/
+9. Oocyte Expression Data
+    1. https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE1749 
+10. DAVID Bioinformatics Go Terms/Orthologs
+11. Toppgene - Toppfun for go terms
+    1. https://toppgene.cchmc.org/
+12. Gene interaction network via Flatiron institute
+    1. https://hb.flatironinstitute.org/gene/64837+25855+5091+8522+9973+10072+89+57124+10897+11041+9610+3177+65003+1521+9158+9883+8722+9986+23379+6712
+13. Known Genes table
