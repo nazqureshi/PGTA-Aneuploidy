@@ -77,17 +77,17 @@ The documentation is designed so that each major stage can be understood indepen
 
 ## Repository Structure
 
+Each directory has it's own corresponding README file
+
 ```text
 .
 ├── pipeline/
 │   ├── phenotype/
+│   ├── bam_merge/
 │   ├── sequencing/
-│   ├── glm/
-│   ├── annotations/
-│   └── candidate_genes/
-├── scripts/
-├── notebooks/
-├── docs/
+│   ├── ancestry/
+│   ├── GLM/
+│   ├── annotation/
 └── README.md
 ```
 
